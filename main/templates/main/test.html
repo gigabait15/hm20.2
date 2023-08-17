@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% block contect %}
+<div class="container">
+    <div class="row text-center">
+        {% for product in products %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ product.name }}</h4>
+                    <h5>
+                        {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ product.price }} rub.</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>-{{ product.category }}</li>
+                        <li>-{{ product.description|truncatechars:100 }}</li>
+                        <li>-{{ product.date_burn }}</li>
+                        <li>-{{ product.date }}</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="pagination">
+        <span class="step-links">
+            {% if products.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ products.previous_page_number }}">предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ products.number }} из {{ products.paginator.num_pages }}.
+            </span>
+
+            {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}">следующая</a>
+                <a href="?page={{ products.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% block contect %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Контакты</h1>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-9 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td class="w-25">Страна</td>
+                            <td>Россия</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">ИНН</td>
+                            <td>91-1144442</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Адрес</td>
+                            <td>Москва, центральная улица, дом 1</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Контактный телефон</td>
+                            <td>+7-999-999-99-99</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Оставьте данные для обратной связи</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" class="form-floating">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name">Имя</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">email</label>
+                            <input type="email" name="email" class="form-control" id="email"
+                                   placeholder="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message">message</label>
+                            <textarea type="text" name="message" class="form-control" id="message"
+                                      placeholder="Дополнительная информация" required></textarea>
+                        </div>
+                    </form>
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
