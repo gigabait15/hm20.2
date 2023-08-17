@@ -1,19 +1,20 @@
 {% extends 'main/base.html' %}
+{% load custom_tags %}
 {% block contect %}
 <div class="container">
     <div class="row text-center">
-        {% for product in products %}
+        {% for product in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ product.name }}</h4>
-                    <h5>
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-                        {% endif %}
-                    </h5>
+                    <h4>
+                         <img src="{% mediapath product.image %}"  class="product-image"
+                         width="100%" height="auto">
+                    </h4>
+                    <h5 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ product.name }}</h5>
                 </div>
                 <div class="card-body">
+
                     <h1 class="card-title pricing-card-title">{{ product.price }} rub.</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>-{{ product.category }}</li>
