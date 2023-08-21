@@ -1,0 +1,45 @@
+{% extends 'Blog/base.html' %}
+{% load custom_tags %}
+{% block contect %}
+<div class="container">
+    <a class="btn btn-outline-primary" href="{% url 'blog:create_blog' %}">Создать новую запись</a>
+    <div class="row text-center">
+        {% for item in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4>
+                         <img src="{% mediapath product.image %}"  class="product-image"
+                         width="100%" height="auto">
+                    </h4>
+                    <h5 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ item.title }} {{item.slug}}</h5>
+                </div>
+                <div class="card-body">
+
+                    <h1 class="card-title pricing-card-title">{{ item.count_view }}</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>-{{ item.is_active }}</li>
+                        <li>-{{ item.description|truncatechars:100 }}</li>
+                        <li>-{{ item.image }}</li>
+                        <li>-{{ item.date }}</li>
+                    </ul>
+                    <div class="d-flex justify-content-between aling-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'blog:view_blog' item.pk item.slug %}"
+                               class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{% url 'blog:update_blog' item.pk %}"
+                               class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="{% url 'blog:delete_blog' item.pk %}" type="button"
+                               class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                        <a href="{% url 'blog:activity' item.pk %}" type="button"
+                               class="btn btn-sm btn-outline-danger">Deactivate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

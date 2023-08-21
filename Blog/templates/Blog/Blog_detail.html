@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load custom_tags %}
+{% block contect %}
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                {% if object.image %}
+                <img src="{{ object.image.url }}" alt="{{ object.title }}" class="card-img-top">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ object.title }}</h5>
+                <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                    <li>Просмотры: {{ object.count_view }}</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{% url 'blog:view_blog' object.pk object.slug %}" class="btn btn-sm btn-outline-secondary">View</a>
+                        <a href="{% url 'blog:update_blog' object.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="{% url 'blog:delete_blog' object.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
