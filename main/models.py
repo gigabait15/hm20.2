@@ -40,10 +40,27 @@ class Product(models.Model):
 
 
 class Feedback(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100, verbose_name='name')
+    email = models.EmailField(verbose_name='email')
+    message = models.TextField(verbose_name='message')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='date')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
+    number_version = models.IntegerField(**NULLABLE, verbose_name='номер версии')
+    name_version = models.CharField(max_length=100, verbose_name='название версии')
+    active_version = models.BooleanField(default=True, verbose_name='признак текущей версии')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'

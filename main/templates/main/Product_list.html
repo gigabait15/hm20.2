@@ -2,43 +2,45 @@
 {% load custom_tags %}
 {% block contect %}
 <div class="container">
-    <a class="btn btn-outline-primary" href="{% url 'main:create_product' %}">Create product</a>
+    <a class="btn btn-outline-primary mb-5" href="{% url 'main:create_product' %}">Create product</a>
     <div class="row text-center">
-        {% for product in object_list %}
+        {% for object in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4>
-                         <img src="{% mediapath product.image %}"  class="product-image"
+                         <img src="{% mediapath object.image %}"  class="product-image"
                          width="100%" height="auto">
                     </h4>
-                    <h5 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ product.name }}</h5>
+                    <h5 class="my-0 font-weight-normal" style="background-color:#C2F2CA">{{ object.name }}</h5>
                 </div>
                 <div class="card-body">
 
-                    <h1 class="card-title pricing-card-title">{{ product.price }} rub.</h1>
+                    <h1 class="card-title pricing-card-title">{{ object.price }} rub.</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>-{{ product.category }}</li>
-                        <li>-{{ product.description|truncatechars:100 }}</li>
-                        <li>-{{ product.date_burn }}</li>
-                        <li>-{{ product.date }}</li>
+                        <li>-{{ object.category }}</li>
+                        <li>-{{ object.description|truncatechars:100 }}</li>
+                        <li>-{{ object.date_burn }}</li>
+                        <li>-{{ object.date }}</li>
                     </ul>
                     <div class="d-flex justify-content-between aling-items-center">
                         <div class="btn-group">
-                            <a href="{% url 'main:view_product' product.pk %}"
+                            <a href="{% url 'main:view_product' object.pk %}"
                                class="btn btn-sm btn-outline-secondary">View</a>
-                            <a href="{% url 'main:update_product' product.pk %}"
+                            <a href="{% url 'main:update_product' object.pk %}"
                                class="btn btn-sm btn-outline-secondary">Edit</a>
-                            <a href="{% url 'main:delete_product' product.pk %}" type="button"
+                            <a href="{% url 'main:delete_product' object.pk %}"
                                class="btn btn-sm btn-outline-danger">Delete</a>
                         </div>
                     </div>
-                    {% if product.is_active %}
-                    <a class="btn btn-warning" href="{% url 'main:activity' product.pk %}">Deactivate</a>
+                    <div class="card-footer">
+                        {% if product.is_active %}
+                    <a class="btn btn-warning" href="{% url 'main:activity' object.pk %}">Deactivate</a>
                     {% else %}
-                    <a class="btn btn-success" href="{% url 'main:activity' product.pk %}">Activate</a>
+                    <a class="btn btn-success" href="{% url 'main:activity' object.pk %}">Activate</a>
                     {% endif %}
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                    </div>
+                    {# <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button> #}
                 </div>
             </div>
         </div>
