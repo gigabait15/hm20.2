@@ -8,7 +8,6 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='наименование')
     description = models.TextField(**NULLABLE, verbose_name='описание')
 
-    views_count = models.IntegerField(default=0, verbose_name='просмотры')
     is_publish = models.BooleanField(default=True, verbose_name='опубликовано')
     slug = models.CharField(max_length=150, verbose_name='slug', **NULLABLE)
 
@@ -30,6 +29,7 @@ class Product(models.Model):
     date = models.DateField(**NULLABLE, verbose_name='дата последнего изменения')
 
     is_active = models.BooleanField(default=True, verbose_name='в наличии')
+    views_count = models.IntegerField(default=0, verbose_name='просмотры')
 
     def __str__(self):
         return f'{self.name} {self.price}({self.description})'

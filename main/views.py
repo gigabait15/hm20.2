@@ -65,3 +65,21 @@ def contact(request):
         feedback.save()
     return render(request, 'main/contact.html')
 
+
+class VersionListView(ListView):
+    model = Version
+
+class VersionDetailView(DetailView):
+    model = Version
+
+class VersionCreateView(CreateView):
+    model = Version
+    form_class = VersionForm
+
+class VersionUpdateView(UpdateView):
+    model = Version
+    form_class = VersionForm
+
+class VersionDeleteView(DeleteView):
+    model = Version
+
