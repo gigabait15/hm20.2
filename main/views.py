@@ -4,23 +4,33 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from main.forms import ProductForm, VersionForm
 from main.models import Product, Feedback, Version
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+    registration_url = reverse_lazy('users:register')
 
-class ProductListView(ListView):
+    def handle_no_permission(self):
+        if self.raise_exception or self.request.user.is_authenticated:
+            return super().handle_no_permission()
+        return redirect(self.registration_url)
+
+class ProductListView(CustomLoginRequiredMixin, ListView):
     model = Product
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(CustomLoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CustomLoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('main:home')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(CustomLoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('main:home')
@@ -47,7 +57,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(CustomLoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('main:home')
 
@@ -86,4 +96,5 @@ class VersionUpdateView(UpdateView):
 
 class VersionDeleteView(DeleteView):
     model = Version
+
 
