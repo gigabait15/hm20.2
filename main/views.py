@@ -9,13 +9,16 @@ from main.models import Product, Feedback, Version
 class ProductListView(ListView):
     model = Product
 
+
 class ProductDetailView(DetailView):
     model = Product
+
 
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('main:home')
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -42,6 +45,7 @@ class ProductUpdateView(UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
 
 class ProductDeleteView(DeleteView):
     model = Product

@@ -1,7 +1,7 @@
 from django.urls import path
-
 from main.views import contact, ProductCreateView, ProductDetailView, ProductUpdateView, ProductListView, \
     ProductDeleteView, activity
+
 
 app_name = 'main'
 
