@@ -5,8 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from main.forms import ProductForm, VersionForm
 from main.models import Product, Feedback, Version
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
+
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):
     registration_url = reverse_lazy('users:register')
@@ -22,6 +21,19 @@ class ProductListView(CustomLoginRequiredMixin, ListView):
 
 class ProductDetailView(CustomLoginRequiredMixin, DetailView):
     model = Product
+    form_class = ProductForm
+    template_name = 'main/Product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        product = context['object']
+
+        versions = product.version_set.all()
+
+        context['versions'] = versions
+
+        return context
 
 
 class ProductCreateView(CustomLoginRequiredMixin, CreateView):
@@ -96,5 +108,20 @@ class VersionUpdateView(UpdateView):
 
 class VersionDeleteView(DeleteView):
     model = Version
+
+def create_version(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    if request.method == 'POST':
+        version_form = VersionForm(request.POST)
+        if version_form.is_valid():
+            version = version_form.save(commit=False)
+            version.product = product
+            version.save()
+    else:
+        version_form = VersionForm()
+
+    return render(request, 'Product_detail.html', {'product': product, 'version_form': version_form})
+
 
 

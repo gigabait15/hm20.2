@@ -8,6 +8,7 @@
                 <div class="card-header">{{object.name}}</div>
                 <div class="card-body">
                     <h4>-{{ object.category }}</h4>
+                    <p>Текущая версия:{{ object.versions }} </p>
                 </div>
                 <div class="card-footer">
                     <a href="{% url 'main:home' %}"
