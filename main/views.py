@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -26,13 +28,16 @@ class ProductDetailView(CustomLoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            key = f"version_list_{self.object.pk}"
+            version_list = cache.get(key)
+            if version_list is None:
+                version_list = self.object.version_set.all()
+                cache.set(key, version_list)
+        else:
+            version_list = self.object.version_set.all()
 
-        product = context['object']
-
-        versions = product.version_set.all()
-
-        context['versions'] = versions
-
+        context['versions'] = version_list
         return context
 
 
